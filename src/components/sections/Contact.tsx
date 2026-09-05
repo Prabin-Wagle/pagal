@@ -1,10 +1,33 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useRef, useState, type ChangeEvent, type FocusEvent, type FormEvent } from "react";
 import { LINKS } from "@/data/content";
 import { gsap, useGSAP, SplitText, prefersReducedMotion } from "@/lib/gsap";
 import Magnetic from "@/components/ui/Magnetic";
 import { scrollToHash } from "@/components/ui/Nav";
 
 type Status = "idle" | "loading" | "success" | "error";
+
+const FIELDS = ["name", "email", "message"] as const;
+type FieldName = (typeof FIELDS)[number];
+type FieldErrors = Partial<Record<FieldName, string>>;
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function validateField(field: FieldName, value: string): string | undefined {
+  const v = value.trim();
+  if (!v) return "Required.";
+  switch (field) {
+    case "name":
+      if (v.length < 2) return "Name must be at least 2 characters.";
+      break;
+    case "email":
+      if (!EMAIL_RE.test(v)) return "Enter a valid email address.";
+      break;
+    case "message":
+      if (v.length < 10) return "Message must be at least 10 characters.";
+      break;
+  }
+  return undefined;
+}
 
 const inputClass =
   "w-full border-b border-current/25 bg-transparent py-3 text-lg placeholder:text-muted/60 outline-none transition-colors duration-300 focus:border-shu";
@@ -13,6 +36,7 @@ export default function Contact() {
   const root = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>("idle");
+  const [errors, setErrors] = useState<FieldErrors>({});
 
   useGSAP(
     () => {
@@ -50,13 +74,41 @@ export default function Contact() {
     { scope: root },
   );
 
+  const handleBlur = (field: FieldName) => (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = e.currentTarget.value;
+    // don't punish a field the user simply tabbed through
+    if (!value.trim() && !errors[field]) return;
+    setErrors((prev) => ({ ...prev, [field]: validateField(field, value) }));
+  };
+
+  const handleChange = (field: FieldName) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    // once a field is flagged, re-validate live so the error clears as it's fixed
+    if (!errors[field]) return;
+    const value = e.currentTarget.value;
+    setErrors((prev) => ({ ...prev, [field]: validateField(field, value) }));
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (status === "loading") return;
-    setStatus("loading");
 
     const form = e.currentTarget;
     const data = new FormData(form);
+
+    const nextErrors: FieldErrors = {};
+    for (const field of FIELDS) {
+      const err = validateField(field, String(data.get(field) ?? ""));
+      if (err) nextErrors[field] = err;
+    }
+    setErrors(nextErrors);
+    const firstInvalid = FIELDS.find((f) => nextErrors[f]);
+    if (firstInvalid) {
+      form.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
+      setStatus("idle");
+      return;
+    }
+
+    setStatus("loading");
     data.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY);
     data.append("subject", "New message from portfolio contact form");
 
@@ -69,6 +121,7 @@ export default function Contact() {
       const result = await res.json();
       if (result.success) {
         setStatus("success");
+        setErrors({});
         form.reset();
       } else {
         setStatus("error");
@@ -118,11 +171,43 @@ export default function Contact() {
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
               <label className="ct-field flex flex-col gap-2">
                 <span className="t-label text-muted">Name</span>
-                <input required type="text" name="name" placeholder="Your name" className={inputClass} />
+                <input
+                  required
+                  type="text"
+                  name="name"
+                  placeholder="Your name"
+                  autoComplete="name"
+                  className={inputClass}
+                  onChange={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  aria-invalid={!!errors.name || undefined}
+                  aria-describedby={errors.name ? "ct-name-error" : undefined}
+                />
+                {errors.name && (
+                  <span id="ct-name-error" className="t-meta text-shu">
+                    {errors.name}
+                  </span>
+                )}
               </label>
               <label className="ct-field flex flex-col gap-2">
                 <span className="t-label text-muted">Email</span>
-                <input required type="email" name="email" placeholder="you@example.com" className={inputClass} />
+                <input
+                  required
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  className={inputClass}
+                  onChange={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  aria-invalid={!!errors.email || undefined}
+                  aria-describedby={errors.email ? "ct-email-error" : undefined}
+                />
+                {errors.email && (
+                  <span id="ct-email-error" className="t-meta text-shu">
+                    {errors.email}
+                  </span>
+                )}
               </label>
             </div>
 
@@ -134,7 +219,16 @@ export default function Contact() {
                 rows={4}
                 placeholder="What are you building?"
                 className={`${inputClass} resize-none`}
+                onChange={handleChange("message")}
+                onBlur={handleBlur("message")}
+                aria-invalid={!!errors.message || undefined}
+                aria-describedby={errors.message ? "ct-message-error" : undefined}
               />
+              {errors.message && (
+                <span id="ct-message-error" className="t-meta text-shu">
+                  {errors.message}
+                </span>
+              )}
             </label>
 
             <div className="ct-field mt-8 flex flex-wrap items-center gap-6">
