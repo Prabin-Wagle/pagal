@@ -54,13 +54,25 @@ function ProjectCase({ p, i }: { p: Project; i: number }) {
       const labels = q(".pv-label");
       gsap.set(pops, { scale: 0, transformOrigin: "center" });
       gsap.set(labels, { opacity: 0 });
-      gsap
-        .timeline({
-          scrollTrigger: { trigger: q(".pj-visual"), start: "top 70%", end: "bottom 45%", scrub: 0.8 },
-        })
-        .fromTo(paths, { drawSVG: "0%" }, { drawSVG: "100%", stagger: 0.02, ease: "none" }, 0)
-        .to(pops, { scale: 1, stagger: 0.02, ease: "back.out(2)" }, 0.25)
-        .to(labels, { opacity: 1, stagger: 0.03, ease: "none" }, 0.4);
+      const mm = gsap.matchMedia();
+      // desktop: scrub the drawing across the viewport
+      mm.add("(pointer: fine)", () => {
+        gsap
+          .timeline({
+            scrollTrigger: { trigger: q(".pj-visual"), start: "top 70%", end: "bottom 45%", scrub: 0.8 },
+          })
+          .fromTo(paths, { drawSVG: "0%" }, { drawSVG: "100%", stagger: 0.02, ease: "none" }, 0)
+          .to(pops, { scale: 1, stagger: 0.02, ease: "back.out(2)" }, 0.25)
+          .to(labels, { opacity: 1, stagger: 0.03, ease: "none" }, 0.4);
+      });
+      // touch: play once on enter — scrubbing would repaint the SVG every scroll frame
+      mm.add("(pointer: coarse)", () => {
+        gsap
+          .timeline({ scrollTrigger: { trigger: q(".pj-visual"), start: "top 70%" } })
+          .fromTo(paths, { drawSVG: "0%" }, { drawSVG: "100%", duration: 1.4, stagger: 0.02, ease: "power2.inOut" }, 0)
+          .to(pops, { scale: 1, duration: 0.6, stagger: 0.03, ease: "back.out(2)" }, 0.5)
+          .to(labels, { opacity: 1, duration: 0.4, stagger: 0.03, ease: "none" }, 0.7);
+      });
 
       // Meta list ticks in like a readout
       gsap.from(q(".pj-bullet"), {
@@ -86,7 +98,10 @@ function ProjectCase({ p, i }: { p: Project; i: number }) {
         { yPercent: -20, ease: "none", scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom top", scrub: true } },
       );
 
-      return () => split.revert();
+      return () => {
+        split.revert();
+        mm.revert();
+      };
     },
     { scope: root },
   );

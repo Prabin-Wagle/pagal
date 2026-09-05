@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, useGSAP, isTouch } from "@/lib/gsap";
 import { Seal } from "@/components/ui/SectionMark";
 
 const LINES = [
@@ -24,10 +24,12 @@ export default function Philosophy() {
           scrollTrigger: {
             trigger: q(".ph-stage"),
             start: "top top",
-            end: "+=220%",
+            // touch: shorter pin — less time scrubbing clip-path on mobile GPUs
+            end: () => (isTouch() ? "+=150%" : "+=220%"),
             pin: true,
             scrub: 0.7,
             anticipatePin: 1,
+            invalidateOnRefresh: true,
           },
         });
         lines.forEach((line, i) => {

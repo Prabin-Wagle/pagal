@@ -54,7 +54,9 @@ export default function Hero({ ready }: Props) {
         },
       });
       exit
-        .to(q(".hero-first"), { xPercent: -18, letterSpacing: "0.02em", ease: "none" }, 0)
+        // no letterSpacing here: it's a layout property and would reflow the
+        // display-size title on every scroll frame
+        .to(q(".hero-first"), { xPercent: -18, ease: "none" }, 0)
         .to(q(".hero-last"), { xPercent: 12, ease: "none" }, 0)
         .to(q(".hero-statement"), { yPercent: -60, opacity: 0, ease: "none" }, 0)
         .to(q(".hero-fade, .hero-vertical, .hero-scroll"), { opacity: 0, ease: "none" }, 0)

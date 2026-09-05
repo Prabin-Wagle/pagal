@@ -20,6 +20,29 @@
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
+/* Register theme vars as real colors so the section flip crossfades the whole
+   page (text + hairlines included) instead of only body's background. */
+@property --bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0b0a09;
+}
+@property --fg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ece6d8;
+}
+@property --muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #8b8474;
+}
+@property --line {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(236, 230, 216, 0.14);
+}
+
 :root {
   --bg: var(--color-ink);
   --fg: var(--color-paper);
@@ -58,7 +81,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  transition: background-color 0.9s var(--ease-in-out-quart), color 0.9s var(--ease-in-out-quart);
+  transition:
+    --bg 0.7s var(--ease-in-out-quart),
+    --fg 0.7s var(--ease-in-out-quart),
+    --muted 0.7s var(--ease-in-out-quart),
+    --line 0.7s var(--ease-in-out-quart);
+}
+
+/* Touch devices: shorter crossfade = smaller full-page repaint window */
+@media (pointer: coarse) {
+  body {
+    transition-duration: 0.4s;
+  }
 }
 
 /* Theme flipping per section — driven by ScrollTrigger in App */
@@ -106,6 +140,18 @@ body[data-theme="paper"] {
 }
 @media (prefers-reduced-motion: reduce) {
   .grain { animation: none; }
+}
+/* Touch GPUs can't afford a 4x-viewport blend layer that re-composites forever:
+   static texture, no blend, exact viewport size. */
+@media (pointer: coarse) {
+  .grain {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: normal;
+    opacity: 0.04;
+    animation: none;
+  }
 }
 
 /* ---------- Typography utilities ---------- */
@@ -165,7 +211,7 @@ body[data-theme="paper"] {
 
 /* Split text line masks */
 .line-mask { overflow: hidden; display: block; }
-.char { display: inline-block; will-change: transform; }
+.char { display: inline-block; }
 .pj-word { display: inline-block; }
 .pj-word:not(:last-child) { margin-right: 0.18em; }
 
@@ -212,6 +258,20 @@ body[data-theme="paper"] {
 :focus-visible {
   outline: 1px solid var(--color-shu);
   outline-offset: 4px;
+}
+
+/* Variable-font axis animation re-shapes text every frame — only pay for it
+   where hover previews matter; touch devices switch instantly. */
+.vf-anim {
+  transition: color 0.7s var(--ease-out-expo);
+}
+@media (hover: hover) and (pointer: fine) {
+  .vf-anim {
+    transition:
+      font-variation-settings 0.7s var(--ease-out-expo),
+      letter-spacing 0.7s var(--ease-out-expo),
+      color 0.7s var(--ease-out-expo);
+  }
 }
 
 /* Reduced motion — hard stop for CSS animations */

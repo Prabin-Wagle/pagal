@@ -72,7 +72,7 @@ export default function Capabilities() {
                 >
                   <span className="font-mono text-xs text-muted transition-colors group-hover:text-shu">{c.n}</span>
                   <span
-                    className="font-sans text-[clamp(1.6rem,4.6vw,3.6rem)] leading-[1] transition-[font-variation-settings,color,letter-spacing] duration-700 [transition-timing-function:cubic-bezier(.16,1,.3,1)]"
+                    className="vf-anim font-sans text-[clamp(1.6rem,4.6vw,3.6rem)] leading-[1]"
                     style={{
                       fontVariationSettings: isActive ? '"opsz" 96, "wdth" 100, "wght" 700' : '"opsz" 96, "wdth" 85, "wght" 260',
                       letterSpacing: isActive ? "-0.02em" : "0em",
