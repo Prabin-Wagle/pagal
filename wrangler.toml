@@ -1,0 +1,16 @@
+# Cloudflare Workers wiring for the "pagal" project (Workers Builds).
+# Mirrors the dashboard setup explicitly so the deploy doesn't depend on
+# hidden defaults: Vite builds to ./dist, src/index.ts guards + serves it.
+
+name = "pagal"
+main = "src/index.ts"
+compatibility_date = "2026-09-01"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+# Unknown paths serve the funny static 404 instead of a generic error page.
+not_found_handling = "404-page"
+
+[build]
+command = "npm run build"
