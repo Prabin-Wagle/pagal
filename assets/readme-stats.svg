@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 230">
+  <rect x="4" y="4" width="1192" height="222" rx="24" fill="#0b0a09" stroke="#ece6d8" stroke-opacity="0.14" stroke-width="2"/>
+
+  <g font-family="Impact, 'Arial Black', sans-serif">
+    <text x="100" y="128" font-size="92" font-weight="900" fill="#ece6d8">08</text>
+    <text x="380" y="128" font-size="92" font-weight="900" fill="#ece6d8">02</text>
+    <text x="660" y="128" font-size="92" font-weight="900" fill="#ece6d8">06</text>
+    <text x="940" y="128" font-size="92" font-weight="900" fill="#c1301c">47</text>
+  </g>
+
+  <g fill="#c1301c">
+    <rect x="102" y="148" width="120" height="6"/>
+    <rect x="382" y="148" width="120" height="6"/>
+    <rect x="662" y="148" width="120" height="6"/>
+    <rect x="942" y="148" width="120" height="6"/>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#8b8474">
+    <text x="100" y="188">SECTIONS SHIPPED</text>
+    <text x="380" y="188">WEBGL SCENES LIVE</text>
+    <text x="660" y="188">GOOGLY EYES ON DUTY</text>
+    <text x="940" y="188">DIMENSIONS SEARCHED</text>
+  </g>
+
+  <g fill="#c1301c">
+    <circle cx="1060" cy="52" r="7">
+      <animate attributeName="opacity" values="1;1;0.2;0.2" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1090" cy="52" r="7" fill="#ece6d8" fill-opacity="0.35">
+      <animate attributeName="opacity" values="0.35;0.35;1;1" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  <text x="100" y="60" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#8b8474" letter-spacing="4">PROJECT AT A GLANCE</text>
+</svg>

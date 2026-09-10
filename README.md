@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/readme-hero.svg" alt="Animated terminal: whoami, stack, status, rotating roles" width="100%" />
+  <img src="assets/readme-hero.svg" alt="Terminal showing whoami, stack, status and role" width="100%" />
 </div>
 
 <div align="center">
@@ -12,92 +12,74 @@
 [![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
 [![Cloudflare](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)
 
-*A portfolio in three acts — ink, intelligence, and the void in between.*
+**Portfolio of Prabin Wagle** — Computer Engineering student building intelligent systems at the intersection of AI, software, and real-world problems.
 
-**Live:** `prabinwagle.com.np` · **Get lost on purpose:** `/404`
+**Live:** `prabinwagle.com.np`
 
 </div>
 
-<img src="assets/readme-divider.svg" alt="" width="100%" />
+<div align="center">
+  <img src="assets/readme-stats.svg" alt="Project stats: 8 sections, 2 WebGL scenes, 6 googly eyes, 47 dimensions searched" width="100%" />
+</div>
 
-## The Film
+## About
 
-Most portfolios are slide decks with a contact form. This one is shot like a film: a **cold-open preloader** (ink counter, progress hairline, curtain lift), a **morphing WebGL ink sculpture** looming behind an editorial hero, and a scroll that crossfades the entire world between ink-black and paper-cream as acts change. Japanese marginalia, ghost numerals, diagram annotations — every frame is art-directed.
+A single-page creative developer portfolio with an editorial ink-and-paper design language, Japanese typographic accents, a real-time WebGL hero sculpture, and scroll-driven storytelling across eight sections. Built with React, Three.js, and GSAP. Deployed on Cloudflare Workers.
 
-Running time: 8 sections + a finale. No intermission. Popcorn optional.
+## Features
 
-## Box Office
-
-- **8 sections** — Hero · About · Capabilities · Stack · Projects · AI Lab · Experiments · Philosophy
-- **2 WebGL scenes** — InkSculpture (hero) + LostInkScene (the void)
-- **6 googly eyes** in the 404 — all of them judging you
-- **47 dimensions** searched for every lost page. The page was in none of them
-- **0 routers** — lost-route detection is ~10 lines of vanilla location sniffing
-- **1** vermilion seal, pressed where it hurts
+- **Animated preloader** — ink counter, progress hairline, and curtain reveal
+- **Interactive WebGL hero** — noise-displaced sculpture with fresnel and contour shading that reacts to cursor and scroll position
+- **Scroll storytelling** — Lenis smooth scrolling with GSAP ScrollTrigger choreography and per-section light/dark theme transitions
+- **Eight content sections** — Hero, About, Capabilities, Stack, Projects, AI Lab, Experiments, Philosophy, plus a Contact footer with validated form
+- **Custom 404 experience** — animated Three.js scene with interactive elements, rotating messages, and a self-typing terminal
+- **Subdomain handling** — unknown subdomains serve the custom 404 with a correct HTTP status via a Cloudflare Worker
+- **Polish throughout** — custom cursor, magnetic buttons, film grain overlay, touch and reduced-motion fallbacks
 
 <div align="center">
   <img src="assets/readme-marquee.svg" alt="Scrolling tech stack marquee" width="100%" />
 </div>
 
-## Cast & Crew
+## Tech Stack
 
-| Credit | Role |
+| Technology | Used for |
 |---|---|
-| React 19 + TypeScript | The leads — continuity guaranteed |
-| Three.js / R3F + Drei | The haunted dimension |
-| GSAP + ScrollTrigger + SplitText | Choreography |
-| Lenis | The glide (GSAP-ticker driven) |
-| Framer Motion + anime.js | Curtains and chaos |
-| Tailwind CSS v4 | Costume department (`@theme` ink/paper/shu) |
-| Cloudflare Workers | The bouncer (subdomain guard + asset serving) |
-| Web3Forms | The messenger (contact form) |
+| React 19 + TypeScript | UI components and application logic |
+| Three.js (R3F + Drei) | Hero sculpture and 404 scene rendering |
+| GSAP + ScrollTrigger | Entrance and scroll-linked animation |
+| Lenis | Smooth scrolling |
+| Framer Motion | Menu and overlay transitions |
+| Tailwind CSS v4 | Styling with theme-based design tokens |
+| Cloudflare Workers | Hosting, subdomain guard, asset serving |
+| Web3Forms | Contact form submissions |
+| Vite | Build tooling (single-file production output) |
 
-## Set Pieces
+## The 404 Page
 
-- **Cold open** — preloader counts in ink while the name registers, then the curtain lifts on cue
-- **The sculpture** — noise-displaced icosahedron with fresnel + topographic contour shaders; dents under your cursor, spins harder as you scroll away
-- **Theme flip** — ScrollTrigger repaints `--bg / --fg / --muted / --line` mid-scroll; the whole page crossfades like a scene change
-- **Diagram language** — every capability ships with its own SVG diagram (graphs, matrices, lenses, orbits)
-- **Finale** — contact footer with validated form, honeypot field, magnetic slide-fill buttons, and a 30vw ghost "PW"
+Unknown URLs render a dedicated animated scene instead of a dead end: two block "4"s flank a spinning red "0", each with eyes that follow the cursor. Clicking a digit (or the poke button) triggers a spin animation with escalating captions. Supporting elements include rotating status messages, a terminal-style log, and a keyboard shortcut (**B**) to return home.
 
-## The Void (Act III)
-
-The 404 is not an error page — it's a location. Two paper "4"s flank a spinning vermilion donut "0", all with **cursor-tracking googly eyes** (one 4 is drunk, with a lazy eye). Click a digit or hit **poke the void** and they do a full panic flip, with escalating commentary from *"the void felt that"* to *"certified void-botherer."* Around it: rotating excuses, a self-typing terminal whose LLM witness lied, and a **B key** that beams you home like a protagonist.
-
-| Route | Destination |
+| Route | Result |
 |---|---|
-| `/404`, `/404.html`, `/?404`, `/#/404`, any unknown path | The void (animated Three.js cut, or the standalone static take) |
-| `random.prabinwagle.com.np` (any path) | The void, real 404 status, URL untouched |
+| `/404`, `/404.html`, `/?404`, `/#/404`, any unknown path | Animated 404 experience |
+| Any unknown subdomain, any path | Same 404 with real 404 HTTP status |
 
-## Easter Eggs (spoilers)
+## Easter Eggs
 
-<details>
-<summary>Click to ruin the surprise</summary>
+- The poke button narrates itself across 6 escalating labels
+- Press **B** anywhere in the 404 to go home
+- 7 rotating status messages and a terminal log that types itself out
+- Hidden details: seal stamp, ghost numerals, katakana marginalia, coordinate references
 
-- The poke button narrates your harassment with 6 escalating labels
-- Press **B** anywhere in the void to beam home
-- 7 rotating excuses, including *"404: the page achieved enlightenment and left the server"*
-- The terminal's `locate lost-page --everywhere` checks behind the couch. Nah
-- 迷 (lost child) seal stamped on the diorama, ghost `404` watermark, katakana marginalia
-- The middle 0 is officially documented in-code as "the overachiever"
-- Run `npm run dev` and open `/404` — the void previews locally with zero DNS required
-
-</details>
-
-<div align="center">
-  <img src="assets/readme-credits.svg" alt="Scrolling credits roll" width="100%" />
-</div>
-
-## Run It Locally
+## Getting Started
 
 ```bash
 npm install
-npm run dev      # -> http://localhost:5173  (/404 previews the void)
+npm run dev      # -> http://localhost:5173 (/404 previews the 404 page)
 npm run build    # single-file production build into dist/
 npm run preview
 ```
 
-Copy `.env.example` to `.env` and set `VITE_WEB3FORMS_ACCESS_KEY` for the contact form.
+Copy `.env.example` to `.env` and set `VITE_WEB3FORMS_ACCESS_KEY` to enable the contact form.
 
 ## Project Structure
 
@@ -105,33 +87,33 @@ Copy `.env.example` to `.env` and set `VITE_WEB3FORMS_ACCESS_KEY` for the contac
 src/
   components/
     sections/     # Hero, About, Capabilities, Stack, Projects, AILab, ...
-    three/        # InkSculpture, LostInkScene (the void)
+    three/        # InkSculpture (hero), LostInkScene (404)
     ui/           # Nav, Cursor, Preloader, Magnetic, ...
-  lib/            # gsap setup, lenis, sceneState (frame-loop shared state)
-  data/           # content.ts — all copy lives here
-  App.tsx         # lightweight lost-route detection (no router)
-  index.ts        # Worker entry: subdomain guard + asset serving
-public/404.html   # standalone 404 fallback (own Three.js scene)
-wrangler.toml     # run_worker_first, 404-page handling, build wiring
+  lib/            # GSAP setup, Lenis, shared frame-loop state
+  data/           # content.ts — all site copy in one place
+  App.tsx         # app shell + lightweight unknown-route detection
+  index.ts        # Cloudflare Worker: subdomain guard + asset serving
+public/404.html   # standalone 404 fallback with its own Three.js scene
+wrangler.toml     # Workers config: entry, assets, 404 handling, build
 ```
 
-## Deployment (Cloudflare Workers Builds)
+## Deployment
 
-1. Connect the repo — framework preset **Vite** (`npm run build` → `dist`)
-2. Custom domains: apex + `www` + **`*.prabinwagle.com.np`** (wildcard DNS + cert automatic)
-3. Optional env vars: `ALLOWED_SUBDOMAINS` (default `www`), `ZONE` (default `prabinwagle.com.np`)
-4. Push to `main` — deploys itself
+Cloudflare Workers Builds, framework preset **Vite** (`npm run build` → `dist`):
 
-## Colophon
+1. Connect the repository
+2. Attach custom domains: apex + `www` + wildcard (`*.prabinwagle.com.np`)
+3. Optional environment variables: `ALLOWED_SUBDOMAINS` (default `www`), `ZONE` (default `prabinwagle.com.np`)
+4. Push to `main` — builds and deploys automatically
 
-Set in **Anton** (display), **Bricolage Grotesque** (text), **Instrument Serif Italic** (asides), **IBM Plex Mono** (metadata), **Shippori Mincho** (Japanese). Palette: ink `#0b0a09` · ink-2 `#15130f` · paper `#ece6d8` · bone `#c9c1ae` · ash `#8b8474` · shu vermilion `#c1301c`.
+## Design Notes
+
+Typography: **Anton** (display), **Bricolage Grotesque** (body), **Instrument Serif Italic** (accents), **IBM Plex Mono** (metadata), **Shippori Mincho** (Japanese). Palette: ink `#0b0a09`, ink-2 `#15130f`, paper `#ece6d8`, bone `#c9c1ae`, ash `#8b8474`, vermilion `#c1301c`.
 
 ---
 
 <div align="center">
 
 © 2026 Prabin Wagle · Computer Engineering · AI / ML · Software · Nepal
-
-深く学び、作り続け、全てを疑う — *learn deeply, keep building, question everything*
 
 </div>

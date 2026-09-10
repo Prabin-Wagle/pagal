@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 96">
   <rect x="4" y="4" width="1192" height="88" rx="20" fill="#0b0a09" stroke="#ece6d8" stroke-opacity="0.14" stroke-width="2"/>
   <rect x="60" y="76" width="1080" height="4" fill="#c1301c"/>
-  <g font-family="Anton, Impact, sans-serif" font-weight="900" font-size="44" fill="#ece6d8">
+  <g font-family="Impact, 'Arial Black', sans-serif" font-weight="900" font-size="44" fill="#ece6d8">
     <animateTransform attributeName="transform" type="translate" from="0 0" to="-1200 0" dur="16s" repeatCount="indefinite"/>
     <text id="tick" x="60" y="62" textLength="1140" lengthAdjust="spacingAndGlyphs">REACT ✦ TYPESCRIPT ✦ THREE.JS ✦ GSAP ✦ LENIS ✦ TAILWIND ✦ CLOUDFLARE ✦</text>
     <use href="#tick" x="1200"/>
