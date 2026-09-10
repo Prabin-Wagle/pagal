@@ -13,18 +13,37 @@ import AILab from "@/components/sections/AILab";
 import Experiments from "@/components/sections/Experiments";
 import Philosophy from "@/components/sections/Philosophy";
 import Contact from "@/components/sections/Contact";
+import NotFound from "@/components/sections/NotFound";
 
 const InkSculpture = lazy(() => import("@/components/three/InkSculpture"));
+
+/**
+ * Lightweight lost-route detection (no router dependency).
+ * True for /404, /404.html, ?404, #/404, or any non-root path —
+ * the last case covers static hosts that rewrite unknown URLs to index.html.
+ * Preview locally with `/404` or `?404`.
+ */
+function isLostRoute() {
+  if (typeof window === "undefined") return false;
+  const { pathname, hash, search } = window.location;
+  if (hash === "#/404") return true;
+  if (new URLSearchParams(search).has("404")) return true;
+  const p = pathname.replace(/\/+$/, "") || "/";
+  return p === "/404" || p.endsWith("/404.html") || (p !== "/" && p !== "/index.html");
+}
 
 export default function App() {
   const [ready, setReady] = useState(false);
   const [sculptureActive, setSculptureActive] = useState(true);
+  // Hooks-safe: computed once, branched on at render time below.
+  const [isLost] = useState(isLostRoute);
 
   const onLoaded = useCallback(() => setReady(true), []);
 
   // Lenis smooth scroll (native scroll, GSAP-ticker driven) + global triggers.
   // Created once — ready/menu only stop & start the same instance.
   useGSAP(() => {
+    if (isLost) return; // the void has no scroll triggers
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
 
@@ -75,6 +94,17 @@ export default function App() {
   useEffect(() => {
     document.body.dataset.theme = "ink";
   }, []);
+
+  // Funny animated 404 — same ink/paper/vermilion world, its own three.js void.
+  if (isLost) {
+    return (
+      <>
+        <Cursor />
+        <div className="grain" aria-hidden />
+        <NotFound />
+      </>
+    );
+  }
 
   return (
     <>

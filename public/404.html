@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0a09" />
+  <title>404 — Lost in the ink · Prabin Wagle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=IBM+Plex+Mono&family=Instrument+Serif:ital@0;1&family=Shippori+Mincho&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    :root {
+      --ink: #0b0a09; --ink-2: #15130f; --paper: #ece6d8;
+      --ash: #8b8474; --shu: #c1301c;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--ink); color: var(--paper);
+      font-family: "Bricolage Grotesque", system-ui, sans-serif;
+      min-height: 100svh; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: var(--shu); color: var(--paper); }
+    .wrap { position: relative; z-index: 1; padding: 6.5rem 1.25rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+    @media (min-width: 768px) { .wrap { padding-left: 2rem; padding-right: 2rem; } }
+    header {
+      position: fixed; inset: 0 0 auto 0; z-index: 50;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 1.25rem; mix-blend-mode: difference; color: #ece6d8;
+    }
+    header a { color: inherit; text-decoration: none; }
+    .logo { font-family: "Anton", sans-serif; font-size: 1.25rem; letter-spacing: -0.01em; }
+    .meta {
+      font-family: "IBM Plex Mono", monospace; font-size: 0.68rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ash);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .meta .r { text-align: right; }
+    #stage { position: relative; height: 44svh; min-height: 300px; margin-top: 1.5rem;
+      border: 1px solid rgba(236,230,216,0.12); background: #15130f99; overflow: hidden; }
+    #stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .tag { position: absolute; font-family: "IBM Plex Mono", monospace; font-size: 0.62rem;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--ash); pointer-events: none; }
+    h1 {
+      font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400;
+      font-size: clamp(2rem, 6vw, 4.2rem); line-height: 1.02; margin-top: 2.5rem; max-width: 22ch;
+    }
+    h1 .display { font-family: "Anton", sans-serif; font-style: normal; text-transform: uppercase; }
+    h1 .shu { color: var(--shu); }
+    #joke { display: flex; gap: 0.75rem; margin-top: 1.5rem; min-height: 3.5rem; align-items: flex-start; }
+    #joke .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--shu); margin-top: 0.55rem; flex-shrink: 0; }
+    #joke p { color: rgba(236,230,216,0.8); font-size: 1.05rem; line-height: 1.4; transition: opacity 0.4s; }
+    .term { margin-top: 2rem; max-width: 42rem; border: 1px solid rgba(236,230,216,0.12);
+      background: #15130f99; padding: 1.25rem; font-family: "IBM Plex Mono", monospace;
+      font-size: 0.8rem; line-height: 1.9; }
+    .term .dim { color: var(--ash); } .term .err { color: var(--shu); }
+    .caret { display: inline-block; width: 8px; height: 1rem; background: var(--shu);
+      vertical-align: -2px; animation: blink 1s steps(2) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 2.5rem; }
+    .btn { position: relative; display: inline-flex; gap: 0.75rem; align-items: center; overflow: hidden;
+      border: 1px solid currentColor; padding: 0.8rem 1.75rem; color: var(--paper); text-decoration: none;
+      font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; }
+    .btn span { position: relative; }
+    .btn::before { content: ""; position: absolute; inset: 0; background: var(--paper);
+      transform: translateX(-101%); transition: transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .btn:hover::before { transform: translateX(0); }
+    .btn:hover span { color: var(--ink); }
+    .ghost { pointer-events: none; position: fixed; bottom: -4vw; left: 0; z-index: 0; user-select: none;
+      font-family: "Anton", sans-serif; font-size: 30vw; line-height: 1; color: rgba(236,230,216,0.04); }
+    .foot { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(236,230,216,0.14);
+      display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; justify-content: space-between;
+      font-family: "IBM Plex Mono", monospace; font-size: 0.68rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ash); }
+  </style>
+  <script type="importmap">
+    { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" id="homeA" href="/">PW</a>
+    <a class="meta" id="homeB" href="/" style="text-decoration:none">Beam home ↑</a>
+  </header>
+
+  <div class="wrap">
+    <div class="meta">
+      <p>Error 404 — 迷子<br />page evaporated mid-render</p>
+      <p class="r">Portfolio<br />Vol. I — 2026</p>
+    </div>
+
+    <div id="stage">
+      <span class="tag" style="left:1rem;top:1rem">VOID-01 // live render</span>
+      <span class="tag" style="right:1rem;bottom:1rem">they have eyes · they judge</span>
+    </div>
+
+    <h1>Well. This is awkward. The page ghosted <span class="shu">everyone.</span></h1>
+
+    <div id="joke"><span class="dot"></span><p id="jokeText"></p></div>
+
+    <div class="term">
+      <p><span class="dim">prabin@void — zsh</span></p>
+      <p>$ locate lost-page --everywhere</p>
+      <p class="dim">▸ searching 47 dimensions……………</p>
+      <p class="dim">▸ asking the LLM……………………… it lied</p>
+      <p class="err">✕ result: page not found (but a donut was)</p>
+      <span class="caret"></span>
+    </div>
+
+    <div class="actions">
+      <a class="btn" id="homeC" href="/"><span>Beam me home</span><span>↗</span></a>
+    </div>
+
+    <div class="foot">
+      <span>lost count: 004 · dignity: recovering</span>
+      <span>© 2026 Prabin Wagle</span>
+    </div>
+  </div>
+  <div class="ghost" aria-hidden="true">404</div>
+
+  <script>
+    // Works at domain root AND project pages (e.g. user.github.io/repo/…).
+    (function () {
+      var seg = location.pathname.split("/").filter(Boolean);
+      var home = seg.length > 1 ? "/" + seg[0] + "/" : "/";
+      ["homeA", "homeB", "homeC"].forEach(function (id) {
+        document.getElementById(id).setAttribute("href", home);
+      });
+    })();
+    // Rotating excuses.
+    (function () {
+      var jokes = [
+        "This page pulled a disappearing jutsu. No smoke bomb. Just gone.",
+        "My AI searched 47 dimensions. The page wasn't in any of them.",
+        "Even the training data has never seen this URL.",
+        "404: the page achieved enlightenment and left the server.",
+        "I asked the LLM where it went. It hallucinated three answers."
+      ];
+      var el = document.getElementById("jokeText"), i = 0;
+      function show() {
+        el.style.opacity = 0;
+        setTimeout(function () { el.textContent = jokes[i % jokes.length]; el.style.opacity = 1; i++; }, 350);
+      }
+      el.textContent = jokes[0]; i = 1;
+      setInterval(show, 3200);
+    })();
+  </script>
+
+  <script type="module">
+    import * as THREE from "three";
+    try {
+      var stage = document.getElementById("stage");
+      var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+      stage.prepend(renderer.domElement);
+      var scene = new THREE.Scene();
+      scene.fog = new THREE.Fog(0x0b0a09, 10, 24);
+      var camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+      camera.position.set(0, 0.2, 10);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+      var key = new THREE.DirectionalLight(0xf5f1e6, 1.6);
+      key.position.set(-4, 6, 5); scene.add(key);
+      var rim = new THREE.PointLight(0xc1301c, 30, 30);
+      rim.position.set(4, -3, 4); scene.add(rim);
+
+      var group = new THREE.Group(); scene.add(group);
+      var paper = new THREE.MeshStandardMaterial({ color: 0xece6d8, roughness: 0.4 });
+      var dim = new THREE.MeshStandardMaterial({ color: 0xc9c1ae, roughness: 0.45 });
+      var shu = new THREE.MeshStandardMaterial({ color: 0xc1301c, roughness: 0.32 });
+      var white = new THREE.MeshStandardMaterial({ color: 0xf5f1e6, roughness: 0.25 });
+      var dark = new THREE.MeshStandardMaterial({ color: 0x0b0a09, roughness: 0.2 });
+
+      function eye(x, y, z, s, parent) {
+        var g = new THREE.Group(); g.position.set(x, y, z);
+        g.add(new THREE.Mesh(new THREE.SphereGeometry(s, 20, 20), white));
+        var pupil = new THREE.Mesh(new THREE.SphereGeometry(s * 0.42, 12, 12), dark);
+        pupil.position.z = s * 0.72; g.add(pupil);
+        parent.add(g); return pupil;
+      }
+      function four(px, mirror, mat2) {
+        var g = new THREE.Group(); g.position.set(px, 0, 0);
+        function bar(w, h, x, y, rz, m) {
+          var b = new THREE.Mesh(new THREE.BoxGeometry(w, h, 0.34), m || paper);
+          b.position.set(x, y, 0); b.rotation.z = rz || 0; g.add(b);
+        }
+        bar(0.34, 2.1, mirror ? 0.42 : -0.42, 0);
+        bar(0.28, 1.35, 0, 0.32, (mirror ? -1 : 1) * 0.62, mat2);
+        bar(1.35, 0.3, 0, -0.18);
+        group.add(g); return g;
+      }
+      var pupils = [];
+      var left = four(-3.1, false, dim);
+      pupils.push(eye(-0.18, 0.78, 0.22, 0.17, left), eye(0.24, 0.78, 0.22, 0.17, left));
+      var right = four(3.1, true, dim); right.rotation.z = -0.28;
+      pupils.push(eye(-0.18, 0.78, 0.22, 0.17, right), eye(0.24, 0.78, 0.22, 0.17, right));
+      var zero = new THREE.Group(); zero.position.set(0, 0.35, 0.4);
+      var donut = new THREE.Mesh(new THREE.TorusGeometry(0.82, 0.36, 28, 64), shu);
+      zero.add(donut); group.add(zero);
+      pupils.push(eye(-0.22, 0.62, 0.42, 0.16, zero), eye(0.24, 0.66, 0.4, 0.14, zero));
+      var ring = new THREE.Mesh(
+        new THREE.TorusGeometry(4.6, 0.012, 8, 128),
+        new THREE.MeshBasicMaterial({ color: 0xece6d8, transparent: true, opacity: 0.16 })
+      );
+      ring.rotation.set(Math.PI / 2.4, 0, 0.3); group.add(ring);
+      var n = 350, pos = new Float32Array(n * 3);
+      for (var i = 0; i < n; i++) {
+        var r = 4 + Math.random() * 9, th = Math.random() * Math.PI * 2;
+        pos[i*3] = Math.cos(th) * r; pos[i*3+1] = (Math.random() - 0.5) * 9; pos[i*3+2] = Math.sin(th) * r - 2;
+      }
+      var dustGeo = new THREE.BufferGeometry();
+      dustGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      var dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({
+        color: 0xece6d8, size: 0.045, transparent: true, opacity: 0.45, depthWrite: false
+      }));
+      group.add(dust);
+
+      var mx = 0, my = 0;
+      addEventListener("pointermove", function (e) {
+        mx = (e.clientX / innerWidth) * 2 - 1;
+        my = -((e.clientY / innerHeight) * 2 - 1);
+      });
+      function fit() {
+        var w = stage.clientWidth, h = stage.clientHeight;
+        renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
+        var s = Math.min(1, Math.max(0.52, (camera.aspect * 6.9) / 13));
+        group.scale.setScalar(s);
+      }
+      addEventListener("resize", fit); fit();
+      var clock = new THREE.Clock();
+      (function tick() {
+        requestAnimationFrame(tick);
+        var t = clock.getElapsedTime();
+        left.rotation.z = 0.1 + Math.sin(t * 0.9) * 0.07;
+        left.position.y = Math.sin(t * 1.2) * 0.14;
+        right.rotation.z = -0.28 + Math.sin(t * 0.8 + 2) * 0.09;
+        right.position.y = -0.15 + Math.sin(t * 1.1 + 2) * 0.14;
+        donut.rotation.x = t * 0.5; donut.rotation.y = t * 0.7;
+        zero.position.y = 0.35 + Math.sin(t * 1.5) * 0.16;
+        dust.rotation.y = t * 0.02;
+        group.rotation.y += (mx * 0.12 - group.rotation.y) * 0.04;
+        group.rotation.x += (-my * 0.08 - group.rotation.x) * 0.04;
+        pupils.forEach(function (p, k) {
+          p.position.x = mx * 0.09 * (k % 2 ? 0.6 : 1);
+          p.position.y = my * 0.09;
+        });
+        renderer.render(scene, camera);
+      })();
+    } catch (err) { /* static content still shines without WebGL */ }
+  </script>
+</body>
+</html>
