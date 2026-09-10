@@ -9,6 +9,9 @@ compatibility_date = "2026-09-01"
 [assets]
 directory = "./dist"
 binding = "ASSETS"
+# Without this, asset hits (e.g. "/" -> index.html on any subdomain root)
+# are served straight from the edge and the Worker guard never runs.
+run_worker_first = true
 # Unknown paths serve the funny static 404 instead of a generic error page.
 not_found_handling = "404-page"
 
