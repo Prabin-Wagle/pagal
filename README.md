@@ -18,9 +18,6 @@
 
 </div>
 
-<div align="center">
-  <img src="assets/readme-stats.svg" alt="Project stats: 8 sections, 2 WebGL scenes, 6 googly eyes, 47 dimensions searched" width="100%" />
-</div>
 
 ## About
 
